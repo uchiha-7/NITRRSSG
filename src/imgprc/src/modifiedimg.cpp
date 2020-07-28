@@ -9,36 +9,22 @@
 
     void imageCallback(const sensor_msgs::ImageConstPtr& msg)
     {
-      try
-      {
-      cv::imshow("view" , cv_bridge::toCvShare(msg, "bgr8")->image);
-      cv::waitKey(0);
-      cv::Mat converted_image;
-   	cv::cvtColor(cv_bridge::toCvShare(msg, "bgr8")->image , converted_image , CV_BGR2GRAY);
+        cv::Mat converted_image;
+	cv:: Mat received_image = cv_bridge::toCvShare(msg, "bgr8")->image;
+   	cv::cvtColor( received_image , converted_image , CV_BGR2GRAY);
 	imwrite("/home/divyanshu/Motu/newimg.jpg" , converted_image);
-	sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "mono8", converted_image).toImageMsg();
-	
-       
-       pub.publish(msg);
-      
-     }
-     catch (cv_bridge::Exception& e)
-     {
-       ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
-     }
+	sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "mono8", converted_image).toImageMsg();
+        pub.publish(msg2);
    }
    
    int main(int argc, char **argv)
    {
      ros::init(argc, argv, "image_listener");
      ros::NodeHandle nh;
-    
      cv::namedWindow("view",cv::WINDOW_AUTOSIZE);
-     cv::startWindowThread();
      image_transport::ImageTransport it(nh);
-      sub = it.subscribe("camera/image", 1, imageCallback);
-      pub = it.advertise("final/image" , 1);
-	
+     pub = it.advertise("final/image" , 1);
+     sub = it.subscribe("camera/image", 1, imageCallback);
      ros::spin();
      cv::destroyWindow("view");
    }

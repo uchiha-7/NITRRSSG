@@ -7,9 +7,9 @@
     {
       try
       {
-       cv::imshow("view", cv_bridge::toCvShare(msg, "mono8")->image);
+       cv::imshow("view2", cv_bridge::toCvShare(msg, "mono8")->image);
        cv::waitKey(0);
-     }
+      }
      catch (cv_bridge::Exception& e)
      {
        ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
@@ -21,7 +21,6 @@
      ros::init(argc, argv, "imagex");
      ros::NodeHandle nh;
      cv::namedWindow("view2",cv::WINDOW_AUTOSIZE);
-     cv::startWindowThread();
      image_transport::ImageTransport it(nh);
      image_transport::Subscriber sub = it.subscribe("final/image", 1, imageCallback);
      ros::spin();

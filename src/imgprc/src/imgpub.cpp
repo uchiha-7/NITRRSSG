@@ -6,13 +6,11 @@
 
     int main(int argc, char** argv)
     {
-	if(argv[1] == NULL)
-		return 1 ;
       ros::init(argc, argv, "image_publisher");
       ros::NodeHandle nh;
      image_transport::ImageTransport it(nh);
      image_transport::Publisher pub = it.advertise("camera/image", 1);
-     cv::Mat image = cv::imread("/home/divyanshu/Motu/imgsrc.jpg", CV_LOAD_IMAGE_COLOR);
+     cv::Mat image = cv::imread("/home/divyanshu/Motu/imgsrc.jpg");
      cv::waitKey(0);
      sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
 
