@@ -1,0 +1,8 @@
+prefix=/home/divyanshu/image_transport_ws/install
+
+Name: imgprc
+Description: Description of imgprc
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
