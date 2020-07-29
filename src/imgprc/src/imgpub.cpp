@@ -10,7 +10,7 @@
       ros::NodeHandle nh;
      image_transport::ImageTransport it(nh);
      image_transport::Publisher pub = it.advertise("camera/image", 1);
-     cv::Mat image = cv::imread("/home/divyanshu/Motu/imgsrc.jpg");
+     cv::Mat image = cv::imread("/home/divyanshu/Motu/imagesrc.jpg");
      cv::waitKey(0);
      sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", image).toImageMsg();
 

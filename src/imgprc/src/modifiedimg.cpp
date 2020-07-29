@@ -8,9 +8,12 @@
     image_transport::Publisher pub ;
 
     void imageCallback(const sensor_msgs::ImageConstPtr& msg)
-    {
+    { 
+       
         cv::Mat converted_image;
 	cv:: Mat received_image = cv_bridge::toCvShare(msg, "bgr8")->image;
+        cv::imshow("view", received_image);
+	cv::waitKey(0);
    	cv::cvtColor( received_image , converted_image , CV_BGR2GRAY);
 	imwrite("/home/divyanshu/Motu/newimg.jpg" , converted_image);
 	sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "mono8", converted_image).toImageMsg();
